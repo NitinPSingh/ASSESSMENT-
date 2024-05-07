@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "@mui/material/Card";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
+
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
@@ -11,7 +11,7 @@ export default function JobCard() {
 
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 345 }}>
       <CardContent>
         <Box display="flex">
           <Avatar
@@ -29,7 +29,7 @@ export default function JobCard() {
         </Box>
 
         <Typography variant="body2" color="text.secondary">
-          Estimated Salar : 10L- 35L <CheckBoxIcon sx={{}} />
+          Estimated Salar : 10L- 35L 
         </Typography>
         <Box>
           <Typography></Typography>
