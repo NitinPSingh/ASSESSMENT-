@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# Workday SDE 1 assessment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Features
 
-## Available Scripts
+- **Job Cards**: Each job listing is displayed as a card containing the job title, company name, location, job description (limited to a certain number of characters with an option to expand), required experience, and an apply button/link.
+- **Filters**: Users can refine the job listings based on minimum experience, company name, location, remote/on-site work, tech stack, role, and minimum base pay.
+- **Infinite Scroll**: The platform loads additional job listings automatically as the user scrolls down the page, without requiring them to click a "Load More" button.
+- **Responsive Design**: The platform is designed to work well on different screen sizes, including mobile devices.
 
-In the project directory, you can run:
+## Technologies Used
 
-### `npm start`
+- **ReactJS**: The core library for building the user interface.
+- **Redux Toolkit**: A modern Redux library for managing application state.
+- **Material-UI**: A popular React UI library for implementing Material Design components.
+- **Vanilla CSS**: Vanilla CSS styles for additional styling.
+- **React Select**: Used for implementing filter UI similar to the one present in the Workday extension.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+1. Clone the repository:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+git clone https://github.com/jaikrishnaverma-dev/workday.git
+```
 
-### `npm run build`
+2. Navigate to the project directory:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+cd workday
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Install dependencies:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+npm install
+```
 
-### `npm run eject`
+4. Start the development server:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+npm start
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The application should now be running at `http://localhost:3000`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Project Structure
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- `src/components`: Contains reusable React components.
+- `src/features`: Contains Redux slices and store to manage application state.
+- `src/constants`: Contains options for react-select.
+- `src/Api`: Contains services for API calls.
+- `src/screen`: Contains the main screens/components of the application.
+- `src/App.css`: Contains custom CSS styles for components and layout.
+- `src/index.js`: Entry point of the React application.
+- `public`: Contains static assets like images, icons, and HTML template.
+- `package.json`: Manifest file for Node.js projects, which includes project metadata and dependencies.
+- `README.md`: Documentation file providing information about the project, its setup, and usage.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Redux Slices
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The project utilizes Redux Toolkit for state management and includes the following slices:
 
-### Code Splitting
+- **jobSlice**: Responsible for managing the job listings and related data.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
