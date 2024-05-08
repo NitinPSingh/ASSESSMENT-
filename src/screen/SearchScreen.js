@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Box, Input, TextField } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import { Box, TextField } from "@mui/material";
 import {
   employeeOptions,
   experienceOptions,
@@ -8,7 +8,7 @@ import {
   salaryOptions,
 } from "../constants/options";
 import SelectMulti from "../componenets/SelectMulti";
-import { dummy } from "../dummy/DummyJobData";
+// import { dummy } from "../dummy/DummyJobData";
 import JobCard from "../componenets/JobCard";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -67,9 +67,13 @@ export default function SearchScreen() {
       if (!item.companyName.toLowerCase().includes(searchCompany.toLowerCase()))
         return false;
 
+      if (selectedExperience && item.minExp<=selectedExperience.value )
+        return false;
+      
+
       return true;
     });
-    console.log(filtered, "as");
+    
     return filtered;
   };
 
@@ -151,7 +155,7 @@ export default function SearchScreen() {
             label={"Remote"}
           />
           <SelectMulti
-            disable
+            
             data={selectedExperience}
             handleData={handleChangeExperience}
             options={experienceOptions}

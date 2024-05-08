@@ -111,7 +111,7 @@ export default function JobCard(props) {
 
             <Box class="info-container">
               <h3 style={{ marginTop: "10px" }}>Minimum Experience</h3>
-              <h2>{props.minExp} years</h2>
+              <h2>{props.minExp?props.minExp:0} years</h2>
             </Box>
           </Box>
           <Box>
