@@ -6,16 +6,10 @@ export const roleOptions = [
         { value: 'frontend', label: 'Frontend' },
         { value: 'fullstack', label: 'Fullstack' },
         { value: 'ios', label: 'IOS' },
-        { value: 'flutter', label: 'Flutter' },
-        { value: 'react-native', label: 'React Native' },
+       
         { value: 'android', label: 'Android' },
-        { value: 'frontend-tech-lead', label: 'Frontend Tech Lead' },
-        { value: 'dev-ops', label: 'Dev-Ops' },
-        { value: 'data-engineer', label: 'Data Engineer' },
-        { value: 'data-science', label: 'Data Science' },
-        { value: 'data-vision', label: 'Data Vision' },
-        { value: 'deep-learning', label: 'Deep-Learning' },
-        { value: 'test-qa', label: 'Test / Qa' }
+        { value: 'tech lead', label: 'Tech Lead' },
+       
       ]
     },
     {
