@@ -41,13 +41,13 @@ export const roleOptions = [
 
 
   export const salaryOptions= [
-    { value: '0L', label: '0L' },
-    { value: '10L', label: '10L' },
-    { value: '20L', label: '20L' },
-    { value: '30L', label: '30L' },
-    { value: '40L', label: '40L' },
-    { value: '50L', label: '50L' },
-    { value: '60L', label: '60L' }
+    { value: 0, label: '0L' },
+    { value: 10, label: '10L' },
+    { value: 20, label: '20L' },
+    { value: 30, label: '30L' },
+    { value: 40, label: '40L' },
+    { value: 50, label: '50L' },
+    { value: 60, label: '60L' }
   ];
 
 
@@ -56,4 +56,4 @@ export const roleOptions = [
     { value: 'hybrid', label: 'Hybrid' },
     { value: 'in-office', label: 'In-office' }
   ];
-  export const experienceOptions = Array.from({ length: 11 }, (_, i) => ({ value: i.toString(), label: i.toString() }));
+  export const experienceOptions = Array.from({ length: 11 }, (_, i) => ({ value: i, label: i.toString() }));

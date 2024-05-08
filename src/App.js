@@ -1,13 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
-import JobCard from './componenets/JobCard';
+import { Provider } from "react-redux";
+import { store } from "./features/store";
 import SearchScreen from './screen/SearchScreen';
 
 function App() {
   return (
-    <div className="App">
+    <Provider store={store}>
      <SearchScreen />
-    </div>
+     </Provider>
   );
 }
 
