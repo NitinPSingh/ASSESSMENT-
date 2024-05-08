@@ -47,7 +47,6 @@ export const roleOptions = [
 
   export const jobTypeOptions = [
     { value: 'remote', label: 'Remote' },
-    { value: 'hybrid', label: 'Hybrid' },
-    { value: 'in-office', label: 'In-office' }
+    { value: 'on-site', label: 'On Site' }
   ];
   export const experienceOptions = Array.from({ length: 11 }, (_, i) => ({ value: i, label: i.toString() }));

@@ -19,7 +19,7 @@ export default function SearchScreen() {
   const { jobs, loading, offset } = useSelector((data) => data.jobStore);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [selectedSalary, setSelectedSalary] = useState(null);
-  const [selectedJobTypes, setSelectedJobTypes] = useState([]);
+  const [selectedJobTypes, setSelectedJobTypes] = useState(null);
   const [selectedExperience, setSelectedExperience] = useState(null);
   const [roles, setRoles] = useState([]);
   const loadMoreRef = useRef(null);
@@ -64,11 +64,20 @@ export default function SearchScreen() {
       ) {
         return false;
       }
-      if (!item.companyName.toLowerCase().includes(searchCompany.toLowerCase()))
+      if (!item.companyName.toLowerCase().includes(searchCompany.toLowerCase()) && !item.location.toLowerCase().includes(searchCompany.toLowerCase()))
         return false;
 
       if (selectedExperience && item.minExp<=selectedExperience.value )
         return false;
+
+      if (selectedJobTypes ){
+        if(selectedJobTypes.value==='remote' && item.location!="remote")
+          return false;
+        
+        if(selectedJobTypes.value!=='remote' && item.location==="remote")
+          return false;
+      }
+       
       
 
       return true;
@@ -148,11 +157,12 @@ export default function SearchScreen() {
             multi={false}
           />
           <SelectMulti
-            disable
+            
             data={selectedJobTypes}
             handleData={handleChangeJobTypes}
             options={jobTypeOptions}
-            label={"Remote"}
+            label={"Remote/On Site"}
+            multi={false}
           />
           <SelectMulti
             
@@ -169,7 +179,7 @@ export default function SearchScreen() {
               maxHeight: "38px",
               "& .MuiInputBase-root": { maxHeight: "38px" },
             }}
-            placeholder="Search Company"
+            placeholder="Search Company/ location"
             onChange={(e) => setSearchCompany(e.target.value)}
             value={searchCompany}
           />
