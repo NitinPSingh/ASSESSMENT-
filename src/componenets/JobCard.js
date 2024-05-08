@@ -73,14 +73,15 @@ export default function JobCard(props) {
         <Typography variant="body2" color="text.secondary">
           Estimated Salar : {props.minJdSalary}L-  {props.maxJdSalary}L 
         </Typography>
-        <Box>
-          <Typography></Typography>
-          <Box className="card_about_wrapper">
+        <Box height="250px" overflow="hidden">
+          <Typography>{props.jobDetailsFromCompany}</Typography>
+        
+        </Box>
+        <Box className="card_about_wrapper" top="-20">
           <div className="show_more">
             <button onClick={() => setShowMore(true)}>Show more</button>
           </div>
           </Box>
-        </Box>
         <Box>
           <Typography></Typography>
         </Box>

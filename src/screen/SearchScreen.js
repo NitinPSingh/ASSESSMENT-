@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Box } from '@mui/material';
 import { employeeOptions, experienceOptions, jobTypeOptions, roleOptions, salaryOptions } from '../constants/options';
 import SelectMulti from '../componenets/SelectMulti';
@@ -14,7 +14,7 @@ export default function SearchScreen() {
    
   } = useSelector((data) => data.jobStore);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
-  const [selectedSalary, setSelectedSalary] = useState([]);
+  const [selectedSalary, setSelectedSalary] = useState(null);
   const [selectedJobTypes, setSelectedJobTypes] = useState([]);
   const [selectedExperience, setSelectedExperience] = useState(null);
   const [roles,setRoles] = useState([])
@@ -45,30 +45,19 @@ export default function SearchScreen() {
   
  
 
-  const filteredArray = (data) => {
+  const filteredArray = () => {
     let filtered = jobs.filter(item => {
       // Apply role filter
       if (roles.length > 0 && !roles.some(role => role.value === item.jobRole)) {
+        console.log("innn",item.jobRole)
         return false;
       }
-      // // Apply number of employees filter
-      // if (selectedEmployees.length > 0 && !selectedEmployees.some(option => option.value === item.numberOfEmployees)) {
-      //   return false;
-      // }
-      // // Apply base salary filter
-      // if (selectedSalary.length > 0 && !selectedSalary.some(option => option.value === item.baseSalary)) {
-      //   return false;
-      // }
-      // // Apply job types filter
-      // if (selectedJobTypes.length > 0 && !selectedJobTypes.some(option => option.value === item.jobType)) {
-      //   return false;
-      // }
-      // // Apply experience filter
-      // if (selectedExperience ==null && !selectedExperience.some(option => option.value === item.experience)) {
-      //   return false;
-      // }
+    
+      console.log(selectedSalary, item.maxJdSalary)
+   
       return true;
     });
+    console.log(filtered,"as")
     return filtered
   };
 
@@ -77,6 +66,11 @@ export default function SearchScreen() {
   //     dispatch(fetchJobs({limit:10,offset}))
   //   }
   // }, [triggerdReq]);
+  useEffect(() => {
+    // Filter jobs based on selected filters
+    // Update filteredArray
+  }, [jobs, roles, selectedEmployees, selectedSalary, selectedJobTypes, selectedExperience]);
+  
 
   useEffect(() => {
     console.log("i am being called")
@@ -86,10 +80,10 @@ export default function SearchScreen() {
         
         if (entries[0].isIntersecting) {
           dispatch(fetchJobs({limit:10,offset}))
-        
+          
         }
       },
-      { threshold: 1 }
+      { threshold: 0.3 }
     );
 
     if (loadMoreRef.current) {
@@ -108,21 +102,21 @@ export default function SearchScreen() {
       <Box display="flex" width="100%">
         <SelectMulti data={roles} handleData={handleChangeRole} options={roleOptions} label={"Roles"} />
         <SelectMulti data={selectedEmployees} handleData={handleChangeEmployees} options={employeeOptions} label={"Number of Employees"} />
-        <SelectMulti data={selectedSalary} handleData={handleChangeSalary} options={salaryOptions} label={"Base Salary"} />
+        <SelectMulti data={selectedSalary} handleData={handleChangeSalary} options={salaryOptions} label={"Base Salary"} multi={false}/>
         <SelectMulti data={selectedJobTypes} handleData={handleChangeJobTypes} options={jobTypeOptions} label={"Job Types"} />
         <SelectMulti data={selectedExperience} handleData={handleChangeExperience} options={experienceOptions} label={"Experience"} multi={false}/>
       </Box>
-      {console.log(jobs)}
+      {console.log(filteredArray)}
       <Box display="flex" width="100%" flexWrap="wrap">
-      {jobs.map((i)=><JobCard key={i.jdUid} {...i} />)}
+      { [...filteredArray()].map((i,_i)=><JobCard key={_i} {...i} />)}
       
-      <Box position="relative" ref={loadMoreRef}>
-
-</Box>
+    
       </Box>
     
 
-    
+      <Box position="relative" width="100%" height="20px" ref={loadMoreRef}>
+
+</Box>
 
       
     </div>
