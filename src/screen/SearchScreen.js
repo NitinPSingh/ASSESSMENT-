@@ -82,6 +82,9 @@ export default function SearchScreen() {
 
       return true;
     });
+    if(filtered.length==0){
+      if (offset <= 947) dispatch(fetchJobs({ limit: 10, offset }));
+    }
     
     return filtered;
   };
@@ -213,10 +216,10 @@ export default function SearchScreen() {
           ref={loadMoreRef}
           paddingTop="50px"
         >
-          {947 === jobs.length ? (
+          { jobs.length>=947 ? (
             <>NO MORE DATA AVAILABLE</>
           ) : (
-            <> {loading && "Loading..."}</>
+            <> {loading && `Loading... ${offset}/947` }</>
           )}
         </Box>
       </Box>
