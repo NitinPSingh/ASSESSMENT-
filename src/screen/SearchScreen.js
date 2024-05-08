@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Input, TextField } from "@mui/material";
 import {
   employeeOptions,
   experienceOptions,
@@ -13,7 +13,7 @@ import JobCard from "../componenets/JobCard";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { fetchJobs } from "../features/jobsSlice";
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from "@mui/material/Unstable_Grid2";
 
 export default function SearchScreen() {
   const { jobs, loading, offset } = useSelector((data) => data.jobStore);
@@ -24,6 +24,7 @@ export default function SearchScreen() {
   const [roles, setRoles] = useState([]);
   const loadMoreRef = useRef(null);
 
+  const [searchCompany, setSearchCompany] = useState("");
   const handleChangeRole = (selectedRoles) => {
     setRoles(selectedRoles);
   };
@@ -52,11 +53,19 @@ export default function SearchScreen() {
         roles.length > 0 &&
         !roles.some((role) => role.value === item.jobRole)
       ) {
-        console.log("innn", item.jobRole);
         return false;
       }
 
-      console.log(selectedSalary, item.maxJdSalary);
+      if (
+        selectedSalary &&
+        (item.minJdSalary
+          ? selectedSalary.value >= item.minJdSalary
+          : selectedSalary.value >= item.maxJdSalary)
+      ) {
+        return false;
+      }
+      if (!item.companyName.toLowerCase().includes(searchCompany.toLowerCase()))
+        return false;
 
       return true;
     });
@@ -71,15 +80,14 @@ export default function SearchScreen() {
     selectedSalary,
     selectedJobTypes,
     selectedExperience,
+    searchCompany,
   ]);
 
   useEffect(() => {
-    console.log("i am being called");
-
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          dispatch(fetchJobs({ limit: 10, offset }));
+          if (offset <= 947) dispatch(fetchJobs({ limit: 10, offset }));
         }
       },
       { threshold: 0.1 }
@@ -97,73 +105,107 @@ export default function SearchScreen() {
   }, [loadMoreRef]);
 
   return (
-    <Box display={"flex"} justifyContent={"center"} >
- <Box   sx={{
-  width: {
-    xs: '100%', // Full width on extra small screens
-    sm: '80%',  // 70% width on small screens and above
-  },
-}}> 
-      <Box display="flex" gap={"20px"} position={"fixed"} flexWrap={"wrap"} width="100%">
-        <SelectMulti
-          data={roles}
-          handleData={handleChangeRole}
-          options={roleOptions}
-          label={"Roles"}
-        />
-        <SelectMulti
-          disable
-          data={selectedEmployees}
-          handleData={handleChangeEmployees}
-          options={employeeOptions}
-          label={"Number of Employees"}
-        />
-        <SelectMulti
-          data={selectedSalary}
-          handleData={handleChangeSalary}
-          options={salaryOptions}
-          label={"Base Salary"}
-          multi={false}
-        />
-        <SelectMulti
-          data={selectedJobTypes}
-          handleData={handleChangeJobTypes}
-          options={jobTypeOptions}
-          label={"Job Types"}
-        />
-        <SelectMulti
-          disable
-          data={selectedExperience}
-          handleData={handleChangeExperience}
-          options={experienceOptions}
-          label={"Experience"}
-          multi={false}
-        />
-      </Box>
-     
-      <Grid container spacing={3} >
-        {[...filteredArray()].map((i, _i) => (
-         <Grid xs={10} sm={4} md={3} key={_i}>
-          <JobCard key={_i} {...i} />
-          </Grid>
-        ))}
-      </Grid>
-
+    <Box display={"flex"} justifyContent={"center"}>
       <Box
-        position="relative"
-        width="100%"
-        height="20px"
-        zIndex={100}
-        textAlign="center"
-        ref={loadMoreRef}
+        sx={{
+          width: {
+            xs: "100%", 
+            sm: "80%", 
+          },
+        }}
       >
-        {947 === jobs.length ? (
-          <>NO MORE DATA AVAILABLE</>
-        ) : (
-          <> {loading && "Loading..."}</>
-        )}
+        <Box
+          display="flex"
+          flexGrow="1"
+          columnGap={"20px"}
+          zIndex={100}
+          position={"fixed"}
+          padding={"6px 0px"}
+          flexWrap={"wrap"}
+        >
+          <SelectMulti
+            data={roles}
+            handleData={handleChangeRole}
+            options={roleOptions}
+            label={"Roles"}
+          />
+          <SelectMulti
+            disable
+            data={selectedEmployees}
+            handleData={handleChangeEmployees}
+            options={employeeOptions}
+            label={"Number of Employees"}
+          />
+          <SelectMulti
+            data={selectedSalary}
+            handleData={handleChangeSalary}
+            options={salaryOptions}
+            label={"Base Salary"}
+            multi={false}
+          />
+          <SelectMulti
+            disable
+            data={selectedJobTypes}
+            handleData={handleChangeJobTypes}
+            options={jobTypeOptions}
+            label={"Remote"}
+          />
+          <SelectMulti
+            disable
+            data={selectedExperience}
+            handleData={handleChangeExperience}
+            options={experienceOptions}
+            label={"Experience"}
+            multi={false}
+          />
+          <TextField
+            variant="outlined"
+            sx={{
+              backgroundColor: "white",
+              maxHeight: "38px",
+              "& .MuiInputBase-root": { maxHeight: "38px" },
+            }}
+            placeholder="Search Company"
+            onChange={(e) => setSearchCompany(e.target.value)}
+            value={searchCompany}
+          />
+        </Box>
+
+        <Box paddingTop={"100px"}>
+          <Grid
+            container
+            spacing={3}
+            sx={{
+              justifyContent: {
+                xs: "center",
+                sm: "left",
+              },
+            }}
+          >
+            {[...filteredArray()].map((i, _i) => (
+              <Grid xs={10} sm={4} md={3} key={_i}>
+                <JobCard key={_i} {...i} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        <Box
+          position="relative"
+          width="100%"
+          height="100px"
+          zIndex={100}
+          textAlign="center"
+          ref={loadMoreRef}
+          paddingTop="50px"
+        >
+          {947 === jobs.length ? (
+            <>NO MORE DATA AVAILABLE</>
+          ) : (
+            <> {loading && "Loading..."}</>
+          )}
+        </Box>
       </Box>
-      </Box>
-      </Box>
+    </Box>
   );
 }

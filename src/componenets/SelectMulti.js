@@ -15,6 +15,7 @@ export default function SelectMulti({data,options,multi=true,disable=false,handl
     isMulti={multi}
     onChange={handleData}
     options={options}
+    isClearable
     theme={(theme)=>({...theme,minWidth:"150px"})}
     placeholder={label}
   />

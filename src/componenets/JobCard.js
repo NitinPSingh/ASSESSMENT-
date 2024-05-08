@@ -4,42 +4,29 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { Box, Button, Link, Modal  } from "@mui/material";
+import { Box, Button, Link, Modal } from "@mui/material";
 
-// const props =     {
-//   "jdUid": "cfff363b-053c-11ef-83d3-06301d0a7178-92032",
-//   "jdLink": "https://weekday.works",
-//   "jobDetailsFromCompany": "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
-//   "maxJdSalary": 103,
-//   "minJdSalary": 86,
-//   "salaryCurrencyCode": "USD",
-//   "location": "mumbai",
-//   "minExp": 10,
-//   "maxExp": 15,
-//   "jobRole": "ios",
-//   "companyName": "Rakuten",
-//   "logoUrl": "https://logo.clearbit.com/rakuten.com"
-// }
 const styles = {
   mask: {
-    WebkitMaskImage: 'linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255), rgba(255, 255, 255, 0))',
-    maskImage: 'linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255), rgba(255, 255, 255, 0))',
+    WebkitMaskImage:
+      "linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255), rgba(255, 255, 255, 0))",
+    maskImage:
+      "linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255), rgba(255, 255, 255, 0))",
   },
 };
 export default function JobCard(props) {
-
-  const [showmore,setShowMore] = useState(false)
-
+  const [showmore, setShowMore] = useState(false);
 
   return (
     <>
-          <Modal
+      <Modal
         open={showmore}
-        onClose={()=>setShowMore(false)}
+        onClose={() => setShowMore(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={{
+        <Box
+          sx={{
             position: "absolute",
             top: "50%",
             left: "50%",
@@ -52,79 +39,103 @@ export default function JobCard(props) {
             overflowY: "scroll",
             borderRadius: 5,
             p: 4,
-          }}>
-            {props?.jobDetailsFromCompany}
-      
+          }}
+        >
+          {props?.jobDetailsFromCompany}
         </Box>
       </Modal>
-    
-  
-    <Card sx={{ width: "100%" }} className="jobCard">
-      <CardContent sx={{padding:"0px 15px!important"}}>
-        <Box padding={"5px 0px"}>
-        <Box display="flex" gap="0.5rem">
-          <Avatar
-            src={props.logoUrl}
-            aria-label="recipe"
-          ></Avatar>
 
+      <Card sx={{ width: "100%" }} className="jobCard">
+        <CardContent sx={{ padding: "0px 15px!important" }}>
+          <Box padding={"5px 0px"}>
+            <Box display="flex" gap="0.5rem">
+              <Avatar src={props.logoUrl} aria-label="recipe"></Avatar>
+
+              <Box>
+                <div className="info-container">
+                  <h3 id="companyname" className="capitalize">
+                    {props.companyName}
+                  </h3>
+                  <h2 className="capitalize">{props.jobRole}</h2>
+                </div>
+                <p
+                  className="capitalize"
+                  style={{
+                    marginTop: "5px",
+                    fontSize: "11px",
+                    fontWeight: 500,
+                    marginBottom: "0px",
+                  }}
+                >
+                  {props.location}
+                </p>
+              </Box>
+            </Box>
+
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              fontWeight={400}
+              fontSize={"14px"}
+              margin={"8px 0px"}
+            >
+              Estimated Salary : {props.minJdSalary && `${props.minJdSalary}L-`}{" "}
+              {props.maxJdSalary}L
+            </Typography>
+            <Box
+              height="250px"
+              overflow="hidden"
+              sx={{ ...styles.mask }}
+              zIndex={5}
+            >
+              <Typography fontWeight={600} fontSize={"1rem"}>
+                About Company:
+              </Typography>
+              <Typography>{props.jobDetailsFromCompany}</Typography>
+            </Box>
+            <Box
+              className=""
+              style={{ cursor: "pointer" }}
+              position={"relative"}
+              onClick={() => setShowMore(true)}
+              marginTop="-20px"
+              zIndex={10}
+              textAlign="center"
+            >
+              <Link underline="none">Show more</Link>
+              {/* <button onClick={() => setShowMore(true)}>Show more</button> */}
+            </Box>
+            <Box>
+              <Typography></Typography>
+            </Box>
+
+            <Box class="info-container">
+              <h3 style={{ marginTop: "10px" }}>Minimum Experience</h3>
+              <h2>{props.minExp} years</h2>
+            </Box>
+          </Box>
           <Box>
-            <div class="info-container">
-              <h3 id="companyname" >{props.companyName}</h3>
-              <h2 id="companyname" >{props.jobRole}</h2>
-            </div>
-            <p style={{marginTop:"5px",fontSize:"11px",fontWeight:500,marginBottom:"0px"}}>{props.location}</p>
+            <Button variant="contained" id="easy_applyBtn" fullWidth>
+              ⚡ Easy Apply
+            </Button>
           </Box>
-        </Box>
-
-        <Typography variant="body2" color="text.secondary" fontWeight={400} fontSize={"14px"} margin={"8px 0px"}>
-          Estimated Salar : {props.minJdSalary}L-  {props.maxJdSalary}L 
-        </Typography>
-        <Box height="250px" overflow="hidden" sx={{...styles.mask}} zIndex={5}>
-          <Typography fontWeight={600} fontSize={"1rem"}>About Company:</Typography>
-          <Typography>{props.jobDetailsFromCompany}</Typography>
-        
-        </Box>
-        <Box className="" style={{ cursor: 'pointer' }} position={"relative"} onClick={() => setShowMore(true)} marginTop="-20px" zIndex={10} textAlign="center">
-        <Link underline="none">
-        Show more
-</Link>
-            {/* <button onClick={() => setShowMore(true)}>Show more</button> */}
-         
+          <Box>
+            <Button variant="contained" id="refer_askBtn" fullWidth>
+              <Avatar
+                src={props.logoUrl}
+                variant="dot"
+                sx={{
+                  width: 24,
+                  height: 24,
+                  marginRight: "10px",
+                  filter: "blur(1px)",
+                }}
+              />
+              Unlock referral asks
+            </Button>
           </Box>
-        <Box>
-          <Typography></Typography>
-        </Box>
-
-        <Box class="info-container" >
-          <h3 style={{marginTop:"10px"}}>Minimum Experience</h3>
-          <h2>{props.minExp} years</h2>
-        </Box>
-        </Box>
-        <Box  >
-        <Button variant="contained" id="easy_applyBtn" fullWidth>
-          ⚡ Easy Apply
-        </Button>
-      </Box>
-      <Box  >
-        <Button variant="contained" id="refer_askBtn" fullWidth>
-        <Avatar
-         src={props.logoUrl}
-         variant="dot"
-      sx={{
-        width: 24,
-        height: 24,
-        marginRight:"10px",
-        filter: 'blur(1px)', 
-      }}
-    />
-     
-     Unlock referral asks
-        </Button>
-      </Box>
-      </CardContent>
-   
-    </Card>
+        </CardContent>
+      </Card>
     </>
   );
 }
